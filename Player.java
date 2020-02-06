@@ -37,5 +37,28 @@ class Player {
             default: return "oops";
         }
     }
+
+    public String getMediumAction(){
+        Random randy = new Random();
+        int actionInt;
+        if (bullets == 0){
+            actionInt = randy.nextInt(2);
+            if (actionInt == 0){
+                return "reload";
+            } else {
+                return "block";
+            }
+        } else {
+            actionInt = randy.nextInt(10);
+            if (actionInt < 6){
+                return "shoot";
+            } else if (actionInt < 9){
+                return "block";
+            } else {
+                return "reload";
+            }
+        }
+
+    }
     
 }

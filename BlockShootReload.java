@@ -5,6 +5,7 @@ class BlockShootReload {
     public Player user = new Player();
     public Player opponent;
     public boolean gameOver = false;
+    public int errorCount = 0;
 
     void BlockShootReload(){
 
@@ -55,17 +56,20 @@ class BlockShootReload {
                 }
                 
             } else if (opponentAction.equals("reload")){
+                opponent.bullets++;
                 System.out.println("Your opponent reloaded. Beware, they get another shot!");
             } else {
                 System.out.println(opponent.name + " blocked.");
             }
         } else if (userAction.equals("shoot") || userAction.equals("s")){
             if (user.bullets > 0){
+                user.bullets--;
                 if (opponentAction.equals("block")){
                     System.out.println(opponent.name + " blocked your shot.");
                 } else if (opponentAction.equals("shoot")){
                     if (opponent.bullets > 0){
                         System.out.println("This one is a draw, keep shooting!");
+                        opponent.bullets--;
                     } else {
                         System.out.println("Your opponent tried to shoot you but had no bullets. YOU WIN!");
                         gameOver = true;
@@ -77,11 +81,27 @@ class BlockShootReload {
                 }
             } else {
                 System.out.println("You don't have any bullets!");
+                if (opponentAction.equals("block")){
+                    System.out.println("Your opponent tried to block anyway.");
+                } else if (opponentAction.equals("shoot")){
+                    if (opponent.bullets > 0){
+                        System.out.println("Your opponent shot you. You feel the darkness closing in. It feels like your body is floating. A beautiful angel whispers in your ear... 'How many times do we have to teach you this lesson old man?! \n*pause* \nIs there anything you'd like me to tell your family?");
+                        getUserString();
+                        System.out.println("Really? Yeah... I'm not doing that. \n The angels words echo in your head as the blood starts to pour down your throat... Soon your lungs will fill and you'll asphyxiate. Hey! At least you got to see " + opponent.name + " one more time... they were a good lay.");
+                        gameOver = true;
+                    } else {
+                        System.out.println("Your opponent tried to shoot but also had no bullets.");
+                    }
+                } else {
+                    opponent.bullets++;
+                    System.out.println("Your opponent reloaded.");
+                }
             }
         } else if (userAction.equals("block") || userAction.equals("b")){
             if (opponentAction.equals("shoot")){
                 if (opponent.bullets > 0 ){
                     System.out.println("You blocked " + opponent.name + "'s shot. Keep shooting!");
+                    opponent.bullets--;
                 } else {
                     System.out.println("You tried to block " + opponent.name + "'s shot but they didn't even have any bullets.");
                 }
@@ -89,8 +109,15 @@ class BlockShootReload {
             } else if (opponentAction.equals("block")){
                 System.out.println("You both blocked. Smart...");
             } else {
+                opponent.bullets++;
                 System.out.println("Your opponent reloaded. Beware, they get another shot!");
             }
+        } else {
+            if (errorCount > 2){
+                System.out.println("How many times do we have to teach you this lesson old man!!");
+            }
+            errorCount++;
+            System.out.println("You can only block, shoot, or reload.");
         }
     }
 
@@ -108,15 +135,22 @@ class BlockShootReload {
             newGame.opponent = new Player();
             newGame.opponent.setRandomName();
             System.out.println("You are playing " + newGame.opponent.getName() + ".");
+            while(!newGame.gameOver){
+                System.out.println("What would you like to do?");
+                newGame.user.action = newGame.getUserString();
+                newGame.opponent.action = newGame.opponent.getEasyAction();
+                newGame.compareActions(newGame.user.action, newGame.opponent.action);
+            }
         } else {
             System.out.println("Only easy is implemented. Starting game on easy");
+            while(!newGame.gameOver){
+                System.out.println("What would you like to do?");
+                newGame.user.action = newGame.getUserString();
+                newGame.opponent.action = newGame.opponent.getEasyAction();
+                newGame.compareActions(newGame.user.action, newGame.opponent.action);
+            }
         }
-        while(!newGame.gameOver){
-            System.out.println("What would you like to do?");
-            newGame.user.action = newGame.getUserString();
-            newGame.opponent.action = newGame.opponent.getEasyAction();
-            newGame.compareActions(newGame.user.action, newGame.opponent.action);
-        }
+        
 
     }
 }

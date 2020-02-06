@@ -47,8 +47,13 @@ class BlockShootReload {
         if (userAction.equals("reload") || userAction.equals("r")){
             user.bullets++;
             if (opponentAction.equals("shoot")){
-                System.out.println(opponent.name + " shot you! YOU LOSE!");
-                gameOver = true;
+                if (opponent.bullets>0){
+                    System.out.println(opponent.name + " shot you! YOU LOSE!");
+                    gameOver = true;
+                } else {
+                    System.out.println("Your opponent tried to shoot you but had no bullets.");
+                }
+                
             } else if (opponentAction.equals("reload")){
                 System.out.println("Your opponent reloaded. Beware, they get another shot!");
             } else {
@@ -59,7 +64,13 @@ class BlockShootReload {
                 if (opponentAction.equals("block")){
                     System.out.println(opponent.name + " blocked your shot.");
                 } else if (opponentAction.equals("shoot")){
-                    System.out.println("This one is a draw, keep shooting!");
+                    if (opponent.bullets > 0){
+                        System.out.println("This one is a draw, keep shooting!");
+                    } else {
+                        System.out.println("Your opponent tried to shoot you but had no bullets. YOU WIN!");
+                        gameOver = true;
+                    }
+                    
                 } else {
                     System.out.println("YOU WIN! You're the greatest shooter in all the land.");
                     gameOver = true;
@@ -69,7 +80,12 @@ class BlockShootReload {
             }
         } else if (userAction.equals("block") || userAction.equals("b")){
             if (opponentAction.equals("shoot")){
-                System.out.println("You blocked " + opponent.name + "'s shot. Keep shooting!");
+                if (opponent.bullets > 0 ){
+                    System.out.println("You blocked " + opponent.name + "'s shot. Keep shooting!");
+                } else {
+                    System.out.println("You tried to block " + opponent.name + "'s shot but they didn't even have any bullets.");
+                }
+                
             } else if (opponentAction.equals("block")){
                 System.out.println("You both blocked. Smart...");
             } else {

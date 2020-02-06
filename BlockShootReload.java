@@ -130,10 +130,29 @@ class BlockShootReload {
         BlockShootReload newGame = new BlockShootReload();
         newGame.printIntro();
         newGame.printDifficulty();
-        if (newGame.getUserString().equals("easy")){
+        newGame.opponent = new Player();
+        newGame.opponent.setRandomName();
+        String difficulty = newGame.getUserString();
+        if (difficulty.equals("easy")){
             System.out.println("Okay. Starting game on easy.");
-            newGame.opponent = new Player();
-            newGame.opponent.setRandomName();
+            System.out.println("You are playing " + newGame.opponent.getName() + ".");
+            while(!newGame.gameOver){
+                System.out.println("What would you like to do?");
+                newGame.user.action = newGame.getUserString();
+                newGame.opponent.action = newGame.opponent.getEasyAction();
+                newGame.compareActions(newGame.user.action, newGame.opponent.action);
+            }
+        } else if (difficulty.equals("medium")){
+            System.out.println("Okay. Starting game on medium.");
+            System.out.println("You are playing " + newGame.opponent.getName() + ".");
+            while(!newGame.gameOver){
+                System.out.println("What would you like to do?");
+                newGame.user.action = newGame.getUserString();
+                newGame.opponent.action = newGame.opponent.getMediumAction();
+                newGame.compareActions(newGame.user.action, newGame.opponent.action);
+            }
+        } else if (difficulty.equals("hard")){
+            System.out.println("Only easy is implemented. Starting game on easy");
             System.out.println("You are playing " + newGame.opponent.getName() + ".");
             while(!newGame.gameOver){
                 System.out.println("What would you like to do?");
@@ -142,13 +161,7 @@ class BlockShootReload {
                 newGame.compareActions(newGame.user.action, newGame.opponent.action);
             }
         } else {
-            System.out.println("Only easy is implemented. Starting game on easy");
-            while(!newGame.gameOver){
-                System.out.println("What would you like to do?");
-                newGame.user.action = newGame.getUserString();
-                newGame.opponent.action = newGame.opponent.getEasyAction();
-                newGame.compareActions(newGame.user.action, newGame.opponent.action);
-            }
+            System.out.println("Thats not valid. Ending game.");
         }
         
 

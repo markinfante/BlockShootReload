@@ -23,7 +23,7 @@ class BlockShootReload {
 
     void printDifficulty(){
 
-        System.out.println("Would you like to play on easy, medium or difficult?");
+        System.out.println("Would you like to play on easy, medium or hard?");
 
     }
 
@@ -152,12 +152,12 @@ class BlockShootReload {
                 newGame.compareActions(newGame.user.action, newGame.opponent.action);
             }
         } else if (difficulty.equals("hard")){
-            System.out.println("Only easy is implemented. Starting game on easy");
+            System.out.println("Starting hard game mode.");
             System.out.println("You are playing " + newGame.opponent.getName() + ".");
             while(!newGame.gameOver){
                 System.out.println("What would you like to do?");
                 newGame.user.action = newGame.getUserString();
-                newGame.opponent.action = newGame.opponent.getEasyAction();
+                newGame.opponent.action = newGame.opponent.getHardAction(newGame.user.bullets);
                 newGame.compareActions(newGame.user.action, newGame.opponent.action);
             }
         } else {

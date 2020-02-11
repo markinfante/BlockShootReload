@@ -11,7 +11,7 @@ class BlockShootReload {
 
     }
 
-    void printIntro(){
+    public void printIntro(){
 
         System.out.println("Welcome to Block, Shoot, Reload.");
         System.out.println("The aim of the game is to shoot the computer before it shoots YOU.");
@@ -21,9 +21,15 @@ class BlockShootReload {
 
     }
 
-    void printDifficulty(){
+    public void printDifficulty(){
 
         System.out.println("Would you like to play on easy, medium or hard?");
+
+    }
+
+    public void printBulletCount(int userBullets, int opponentBullets){
+        System.out.println("You have " + userBullets + " bullets.");
+        System.out.println(opponent.name + " has " + opponentBullets + " bullets.");
 
     }
 
@@ -45,6 +51,10 @@ class BlockShootReload {
     }
 
     public void compareActions(String userAction, String opponentAction){
+        if (userAction.equals("q") || userAction.equals("quit")){
+            System.out.println("You have asked to quit the game. GAME OVER.");
+            System.exit(0);
+        }
         if (userAction.equals("reload") || userAction.equals("r")){
             user.bullets++;
             if (opponentAction.equals("shoot")){
